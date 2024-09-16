@@ -1,7 +1,7 @@
 # Directories
-GO_DIR ?= QuantumFuse/core/QuantumFuse/node
-PYTHON_DIR ?= QuantumFuse/core/QuantumFuse/node/QuantumFuse/api
-FRONTEND_DIR ?= QuantumFuse/core/QuantumFuse/node/QuantumFuse/frontend/quantumfuse-app
+GO_DIR ?= QuantumFuse_Blockchain/node/src
+PYTHON_DIR ?= QuantumFuse_Blockchain/core/src
+FRONTEND_DIR ?= QuantumFuse_Blockchain/quantumfuse_dapp/src
 
 # Common Variables
 PROTOTOOL ?= protoc
