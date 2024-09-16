@@ -109,3 +109,23 @@ This component explores the integration of blockchain with AR/VR/XR environments
 ### React Frontend
 
 The React frontend provides an interface to visualize the blockchain in real-time, search transactions, and analyze blockchain data.
+
+---
+
+# Core
+
+```sh
+pip install -r requirements.txt - Successfully installed all dependencies.
+```
+
+# Node
+
+```sh
+go mod tidy - Successfully downloaded and prepared dependencies.
+go build -o QuantumFuseNode - Successfully built the Go node executable.
+```
+# QuantumFuse Dapp
+```sh
+npm install - Successfully installed all dependencies.
+npm run build - Successfully created an optimized production build.
+
