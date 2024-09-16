@@ -1,5 +1,5 @@
 # Directories
-GO_DIR ?= node
+GO_DIR ?= node/src
 PYTHON_DIR ?= core/src
 FRONTEND_DIR ?= quantumfuse_dapp
 
@@ -96,7 +96,7 @@ build-python: setup-python
 
 run-python: setup-python
 	@echo "Running Python API..."
-	@python $(PYTHON_DIR)/api.py
+	@python $(PYTHON_DIR)/quantumfuse_core_main.py
 
 test-python:
 	@echo "Running Python tests..."
