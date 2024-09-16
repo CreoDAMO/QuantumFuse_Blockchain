@@ -1,0 +1,41 @@
+# Blockchain, Flask, and Utility Libraries
+Flask==3.0.3
+flask-cors==5.0.0    # CORS support for Flask API
+gunicorn==23.0.0     # Production WSGI server for Flask
+requests==2.32.1     # HTTP requests handling
+ipfshttpclient==0.8.0a2  # IPFS integration for decentralized storage
+prometheus_client==0.20.0  # Monitoring and metrics collection
+redis==5.1.0b7       # Redis for caching, queues, and real-time tasks
+
+# Quantum Computing Libraries
+qiskit==1.1.1        # Quantum computing framework for quantum algorithms
+
+# Data Handling, Calculations, and Analytics
+pandas==2.2.2        # Data analysis and reporting
+numpy==2.1.1         # For AI analytics, anomaly detection, and performance optimization
+scikit-learn==1.5.0  # Advanced machine learning and AI features
+matplotlib==3.5.2    # Visualization of data and analytics
+
+# Cryptography and Secure Transactions
+pycryptodome==3.14.1  # For secure multi-signature transactions and cryptography
+pyjwt==2.4.0         # JSON Web Token for secure authentication
+
+# Load environment variables
+python-dotenv==0.19.2  # For loading .env configuration
+
+# JSON handling and serialization
+jsonlib==1.6.1       # JSON handling for audits, cross-chain data, and KYC
+jsonschema==4.2.1    # Optional: JSON schema validation for KYC or transactions
+
+# Web3 interaction and cross-chain communication
+web3==5.24.0         # Ethereum and blockchain interoperability (optional)
+
+# Unit Testing and Error Handling
+pytest==6.2.5        # For testing blockchain components
+
+# Optional FastAPI support
+FastAPI==0.70.0      # Optional: FastAPI for high-performance APIs
+uvicorn==0.15.0      # ASGI server for FastAPI
+
+# Monitoring and Metrics
+prometheus_client==0.20.0  # For exposing metrics to Prometheus
