@@ -24,7 +24,6 @@ pyjwt==2.9.0  # JSON Web Token for secure authentication
 python-dotenv==1.0.1  # For loading .env configuration
 
 # JSON handling and serialization
-jsonlib==1.6.1       # JSON handling for audits, cross-chain data, and KYC
 jsonschema==4.23.0    # Optional: JSON schema validation for KYC or transactions
 
 # Web3 interaction and cross-chain communication
