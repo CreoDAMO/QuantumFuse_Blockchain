@@ -60,8 +60,7 @@ setup-go:
 
 build-go: setup-go
 	@echo "Building Go project..."
-	@go build -o $(GO_DIR)/QuantumFuse_Blockchain/node
-/src $(GO_DIR)/main.go
+	@go build -o $(GO_DIR)/QuantumFuseNode $(GO_DIR)/main.go
 
 run-go: build-go
 	@echo "Running Go project..."
@@ -73,8 +72,7 @@ test-go: setup-go
 
 clean-go:
 	@echo "Cleaning Go build..."
-	@rm -f $(GO_DIR)/QuantumFuse_Blockchain/node
-/src
+	@rm -f $(GO_DIR)/QuantumFuseNode
 
 update-go: setup-go
 	@echo "Updating Go dependencies..."
