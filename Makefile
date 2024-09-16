@@ -1,5 +1,5 @@
 # Directories
-GO_DIR ?= QuantumFuse_Blockchain/node/src
+GO_DIR ?= QuantumFuse_Blockchain/node
 PYTHON_DIR ?= QuantumFuse_Blockchain/core/src
 FRONTEND_DIR ?= QuantumFuse_Blockchain/quantumfuse_dapp/src
 
