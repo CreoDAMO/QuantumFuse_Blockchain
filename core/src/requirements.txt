@@ -13,28 +13,26 @@ qiskit==1.2.1        # Quantum computing framework for quantum algorithms
 # Data Handling, Calculations, and Analytics
 pandas==2.2.2        # Data analysis and reporting
 numpy==2.1.1         # For AI analytics, anomaly detection, and performance optimization
-scikit-learn==1.5.0  # Advanced machine learning and AI features
-matplotlib==3.5.2    # Visualization of data and analytics
+scikit-learn==1.5.2  # Advanced machine learning and AI features
+matplotlib==3.9.2    # Visualization of data and analytics
 
 # Cryptography and Secure Transactions
-pycryptodome==3.14.1  # For secure multi-signature transactions and cryptography
-pyjwt==2.4.0         # JSON Web Token for secure authentication
+pycryptodome==3.20.0  # For secure multi-signature transactions and cryptography
+pyjwt==2.9.0  # JSON Web Token for secure authentication
 
 # Load environment variables
-python-dotenv==0.19.2  # For loading .env configuration
+python-dotenv==1.0.1  # For loading .env configuration
 
 # JSON handling and serialization
 jsonlib==1.6.1       # JSON handling for audits, cross-chain data, and KYC
+jsonschema==4.23.0    # Optional: JSON schema validation for KYC or transactions
 
 # Web3 interaction and cross-chain communication
-web3==5.24.0         # Ethereum and blockchain interoperability (optional)
+web3==7.2.0         # Ethereum and blockchain interoperability (optional)
 
 # Unit Testing and Error Handling
-pytest==6.2.5        # For testing blockchain components
+pytest==8.3.3        # For testing blockchain components
 
 # Optional FastAPI support
-FastAPI==0.70.0      # Optional: FastAPI for high-performance APIs
-uvicorn==0.15.0      # ASGI server for FastAPI
-
-# Monitoring and Metrics
-prometheus_client==0.20.0  # For exposing metrics to Prometheus
+FastAPI==0.114.2      # Optional: FastAPI for high-performance APIs
+uvicorn==0.30.6      # ASGI server for FastAPI
