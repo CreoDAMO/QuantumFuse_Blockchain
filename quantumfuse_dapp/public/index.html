@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumFuse Blockchain - Leading the Future of Decentralized Technology</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --background-color: #f0f0f0;
+            --text-color: #333;
+            --neumorphic-light: #ffffff;
+            --neumorphic-dark: #d1d9e6;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .neumorphic {
+            background: var(--background-color);
+            box-shadow: 8px 8px 16px var(--neumorphic-dark), -8px -8px 16px var(--neumorphic-light);
+            border-radius: 20px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .neumorphic:hover {
+            box-shadow: 12px 12px 20px var(--neumorphic-dark), -12px -12px 20px var(--neumorphic-light);
+        }
+
+        .btn-neumorphic {
+            background: var(--background-color);
+            box-shadow: 5px 5px 10px var(--neumorphic-dark), -5px -5px 10px var(--neumorphic-light);
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-neumorphic:hover {
+            box-shadow: inset 5px 5px 10px var(--neumorphic-dark), inset -5px -5px 10px var(--neumorphic-light);
+        }
+
+        .dark-mode {
+            --background-color: #2c3e50;
+            --text-color: #ecf0f1;
+            --neumorphic-light: #34495e;
+            --neumorphic-dark: #2c3e50;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <div id="particles-js"></div>
+
+    <header class="neumorphic m-4">
+        <nav class="flex justify-between items-center p-4">
+            <h1 class="text-3xl font-bold text-primary">QuantumFuse</h1>
+            <ul class="flex space-x-4">
+                <li><a href="#features" class="btn-neumorphic">Features</a></li>
+                <li><a href="#technology" class="btn-neumorphic">Technology</a></li>
+                <li><a href="#tokenomics" class="btn-neumorphic">Tokenomics</a></li>
+                <li><a href="#governance" class="btn-neumorphic">Governance</a></li>
+                <li><a href="#sustainability" class="btn-neumorphic">Sustainability</a></li>
+            </ul>
+            <button id="darkModeToggle" class="btn-neumorphic">🌓</button>
+        </nav>
+    </header>
+
+    <main class="flex-grow">
+        <section id="hero" class="neumorphic m-4 p-8 text-center">
+            <h2 class="text-4xl font-bold mb-4">Welcome to QuantumFuse Blockchain</h2>
+            <p class="text-xl mb-8">The next generation of blockchain technology</p>
+            <a href="#features" class="btn-neumorphic text-lg">Explore Features</a>
+        </section>
+
+        <section id="live-data" class="neumorphic m-4 p-8">
+            <h3 class="text-2xl font-bold mb-4">Live Blockchain Data</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="neumorphic p-4">
+                    <h4 class="text-lg font-semibold mb-2">Live Transactions</h4>
+                    <p id="liveTransactions" class="text-3xl font-bold">0</p>
+                </div>
+                <div class="neumorphic p-4">
+                    <h4 class="text-lg font-semibold mb-2">Latest Blocks</h4>
+                    <p id="latestBlocks" class="text-3xl font-bold">0</p>
+                </div>
+                <div class="neumorphic p-4">
+                    <h4 class="text-lg font-semibold mb-2">Connected Nodes</h4>
+                    <p id="connectedNodes" class="text-3xl font-bold">0</p>
+                </div>
+                <div class="neumorphic p-4">
+                    <h4 class="text-lg font-semibold mb-2">Network Hash Rate</h4>
+                    <p id="networkHashRate" class="text-3xl font-bold">0 H/s</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="neumorphic m-4 p-8">
+            <h3 class="text-2xl font-bold mb-4">Key Features</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Core Blockchain in Python</h4>
+                    <p>High-performance and secure blockchain infrastructure with PoS.</p>
+                    <p class="mt-2">Our Python-based core ensures unparalleled speed and security, leveraging Proof of Stake for eco-friendly consensus.</p>
+                </div>
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Node Implementation in Go</h4>
+                    <p>Efficient networking and IPFS integration.</p>
+                    <p class="mt-2">Go-powered nodes provide lightning-fast networking and seamless IPFS integration for decentralized storage.</p>
+                </div>
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">API with Python & Flask</h4>
+                    <p>Flexible and powerful API for seamless interaction.</p>
+                    <p class="mt-2">Our Python & Flask API offers developers a robust and flexible interface for building on QuantumFuse.</p>
+                </div>
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Quantum Computing Simulation</h4>
+                    <p>Future-proof blockchain with Qiskit integration.</p>
+                    <p class="mt-2">Qiskit integration allows for quantum-resistant cryptography and advanced quantum simulations.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="visualization" class="neumorphic m-4 p-8">
+            <h3 class="text-2xl font-bold mb-4">Node and Sharding Visualization</h3>
+            <div class="chart-container">
+                <canvas id="nodeVisualization"></canvas>
+            </div>
+        </section>
+
+        <section id="smart-contracts" class="neumorphic m-4 p-8">
+            <h3 class="text-2xl font-bold mb-4">Smart Contracts & NFTs</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Deploy Smart Contract</h4>
+                    <textarea id="contractCode" class="w-full h-32 p-2 mb-2 rounded" placeholder="Contract Code"></textarea>
+                    <input type="text" id="contractParams" class="w-full p-2 mb-2 rounded" placeholder="Parameters">
+                    <button id="deployContract" class="btn-neumorphic w-full">Deploy</button>
+                </div>
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Mint NFT</h4>
+                    <input type="text" id="nftMetadata" class="w-full p-2 mb-2 rounded" placeholder="Metadata">
+                    <div class="flex items-center mb-2">
+                        <input type="checkbox" id="fractionalizeNFT" class="mr-2">
+                        <label for="fractionalizeNFT">Fractionalize?</label>
+                    </div>
+                    <button id="mintNFT" class="btn-neumorphic w-full">Mint NFT</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="ai-analytics" class="neumorphic m-4 p-8">
+            <h3 class="text-2xl font-bold mb-4">AI-Driven Analytics</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Predictive Analytics</h4>
+                    <div class="chart-container">
+                        <canvas id="predictiveChart"></canvas>
+                    </div>
+                </div>
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Anomaly Detection</h4>
+                    <div class="chart-container">
+                        <canvas id="anomalyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="energy-management" class="neumorphic m-4 p-8">
+            <h3 class="text-2xl font-bold mb-4">Energy Management & Sustainability</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Energy Consumption</h4>
+                    <div class="chart-container">
+                        <canvas id="energyConsumptionChart"></canvas>
+                    </div>
+                </div>
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Grid Stability</h4>
+                    <div class="chart-container">
+                        <canvas id="gridStabilityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="technology" class="neumorphic m-4 p-8">
+            <h3 class="text-2xl font-bold mb-4">Technology Stack</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div class="neumorphic p-4 text-center">
+                    <img src="https://picsum.photos/200/200?random=1" alt="Python" class="w-16 h-16 mx-auto mb-2 rounded-full">
+                    <p>Python</p>
+                </div>
+                <div class="neumorphic p-4 text-center">
+                    <img src="https://picsum.photos/200/200?random=2" alt="Go" class="w-16 h-16 mx-auto mb-2 rounded-full">
+                    <p>Go</p>
+                </div>
+                <div class="neumorphic p-4 text-center">
+                    <img src="https://picsum.photos/200/200?random=3" alt="Qiskit" class="w-16 h-16 mx-auto mb-2 rounded-full">
+                    <p>Qiskit</p>
+                </div>
+                <div class="neumorphic p-4 text-center">
+                    <img src="https://picsum.photos/200/200?random=4" alt="IPFS" class="w-16 h-16 mx-auto mb-2 rounded-full">
+                    <p>IPFS</p>
+                </div>
+                <div class="neumorphic p-4 text-center">
+                    <img src="https://picsum.photos/200/200?random=5" alt="AI" class="w-16 h-16 mx-auto mb-2 rounded-full">
+                    <p>AI</p>
+                </div>
+                <div class="neumorphic p-4 text-center">
+                    <img src="https://picsum.photos/200/200?random=6" alt="Blockchain" class="w-16 h-16 mx-auto mb-2 rounded-full">
+                    <p>Blockchain</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="ar-vr" class="neumorphic m-4 p-8 text-center">
+            <h3 class="text-2xl font-bold mb-4">Experience QuantumFuse in AR/VR</h3>
+            <button id="launchAR" class="btn-neumorphic text-lg">Launch AR Experience</button>
+            <button id="launchVR" class="btn-neumorphic text-lg ml-4">Launch VR Experience</button>
+        </section>
+
+        <section id="tokenomics" class="neumorphic m-4 p-8">
+            <h3 class="text-2xl font-bold mb-4">Tokenomics</h3>
+            <div class="chart-container">
+                <canvas id="tokenomicsChart"></canvas>
+            </div>
+        </section>
+
+        <section id="governance" class="neumorphic m-4 p-8">
+            <h3 class="text-2xl font-bold mb-4">Governance Model</h3>
+            <p class="mb-4">Experience our innovative governance system:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Create Proposal</h4>
+                    <textarea id="proposalText" class="w-full h-32 p-2 mb-2 rounded" placeholder="Proposal details"></textarea>
+                    <button id="submitProposal" class="btn-neumorphic w-full">Submit Proposal</button>
+                </div>
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Active Proposals</h4>
+                    <ul id="proposalList" class="list-disc pl-5">
+                        <!-- Proposals will be dynamically added here -->
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="sustainability" class="neumorphic m-4 p-8">
+            <h3 class="text-2xl font-bold mb-4">Sustainability</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Green Staking</h4>
+                    <p>Earn rewards while supporting eco-friendly practices through green staking initiatives.</p>
+                    <button id="stakeTokens" class="btn-neumorphic mt-4">Stake Tokens</button>
+                </div>
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Carbon Credits</h4>
+                    <p>Offset your carbon footprint with our integrated blockchain-based carbon credits system.</p>
+                    <div class="mt-4">
+                        <label for="carbonFootprint" class="block mb-2">Your estimated carbon footprint:</label>
+                        <input type="number" id="carbonFootprint" class="w-full p-2 rounded" placeholder="Enter CO2 in tons/year">
+                        <p id="carbonCreditsNeeded" class="mt-2">Carbon credits needed: <span>0</span></p>
+                        <button id="purchaseCredits" class="btn-neumorphic mt-2">Purchase Credits</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="use-cases" class="neumorphic m-4 p-8">
+            <h3 class="text-2xl font-bold mb-4">Use Cases</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Decentralized Identity Management</h4>
+                    <img src="https://picsum.photos/400/300?random=7" alt="Decentralized Identity" class="w-full h-40 object-cover mb-4 rounded">
+                    <p>Implement secure, privacy-preserving digital identities on the QuantumFuse blockchain.</p>
+                </div>
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Sustainable E-commerce</h4>
+                    <img src="https://picsum.photos/400/300?random=8" alt="Sustainable E-commerce" class="w-full h-40 object-cover mb-4 rounded">
+                    <p>Leverage blockchain for a decentralized marketplace with trustless transactions and green logistics.</p>
+                </div>
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Smart Contracts & NFTs</h4>
+                    <img src="https://picsum.photos/400/300?random=9" alt="Smart Contracts & NFTs" class="w-full h-40 object-cover mb-4 rounded">
+                    <p>Manage standard and fractional NFTs with live metadata updates and secure smart contracts.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="data-flow" class="neumorphic m-4 p-8">
+            <h3 class="text-2xl font-bold mb-4">Data Flow for Enhanced Blockchain Modules & Wallets</h3>
+            <div class="relative h-96">
+                <!-- SVG will be dynamically created here -->
+            </div>
+        </section>
+
+        <section id="ai-optimization" class="neumorphic m-4 p-8">
+            <h3 class="text-2xl font-bold mb-4">QuantumFuse AI Optimization</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Fusion Reactor Monitoring</h4>
+                    <div class="chart-container">
+                        <canvas id="fusionReactorChart"></canvas>
+                    </div>
+                </div>
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Dynamic NFT Minting</h4>
+                    <div id="dynamicNFT" class="w-full h-64 bg-gray-200 rounded flex items-center justify-center">
+                        <p class="text-lg">NFT Preview</p>
+                    </div>
+                    <button id="mintDynamicNFT" class="btn-neumorphic mt-4 w-full">Mint Dynamic NFT</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="energy-marketplace" class="neumorphic m-4 p-8">
+            <h3 class="text-2xl font-bold mb-4">Energy Marketplace</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Available Energy Credits</h4>
+                    <div class="chart-container">
+                        <canvas id="energyCreditsChart"></canvas>
+                    </div>
+                </div>
+                <div class="neumorphic p-4">
+                    <h4 class="text-xl font-semibold mb-2">Trade Energy Credits</h4>
+                    <input type="number" id="energyAmount" class="w-full p-2 mb-2 rounded" placeholder="Amount of energy credits">
+                    <div class="flex justify-between">
+                        <button id="buyEnergy" class="btn-neumorphic w-1/2 mr-2">Buy</button>
+                        <button id="sellEnergy" class="btn-neumorphic w-1/2 ml-2">Sell</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="grid-stability" class="neumorphic m-4 p-8">
+            <h3 class="text-2xl font-bold mb-4">Grid Stability Simulation</h3>
+            <p class="mb-4">Interact with simulated grid stability events and see how the QuantumFuse Blockchain responds.</p>
+            <div class="flex items-center justify-between mb-4">
+                <button id="simulateEvent" class="btn-neumorphic">Simulate Event</button>
+                <div class="flex items-center">
+                    <span class="mr-2">Grid Status:</span>
+                    <div id="gridStatus" class="w-4 h-4 rounded-full bg-green-500"></div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="gridStabilitySimulation"></canvas>
+            </div>
+        </section>
+    </main>
+
+    <footer class="neumorphic m-4 p-8">
+        <div class="flex flex-wrap justify-between items-center">
+            <div>
+                <h3 class="text-2xl font-bold mb-2">QuantumFuse</h3>
+                <p>Revolutionizing blockchain technology with advanced quantum computing integration and sustainability initiatives.</p>
+            </div>
+            <div>
+                <h4 class="text-lg font-semibold mb-2">Quick Links</h4>
+                <ul>
+                    <li><a 
