@@ -68,7 +68,7 @@ run-go: build-go
 
 test-go: setup-go
 	@echo "Testing Go project..."
-	@go test -v -cover -C $(GO_DIR)
+	@(cd $(GO_DIR) && go test -v -cover ./...)
 
 clean-go:
 	@echo "Cleaning Go build..."
