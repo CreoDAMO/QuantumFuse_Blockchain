@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FaDatabase, FaExchangeAlt, FaCogs, FaPython, FaGo, FaAtom } from 'react-icons/fa';
+import { FaDatabase, FaExchangeAlt, FaCogs, FaPython, FaServer, FaAtom } from 'react-icons/fa';
 
 const FeaturesContainer = styled.section`
   padding: 4rem 2rem;
@@ -68,7 +68,7 @@ const features = [
     description: 'High-performance and secure blockchain infrastructure with PoS.',
   },
   {
-    icon: <FaGo />,
+    icon: <FaServer />, // Replaced FaGo with FaServer
     title: 'Node Implementation in Go',
     description: 'Efficient networking and IPFS integration.',
   },
