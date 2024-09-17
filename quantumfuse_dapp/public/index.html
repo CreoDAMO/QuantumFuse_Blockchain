@@ -7,357 +7,486 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
-
+        
         body {
             font-family: 'Roboto', sans-serif;
+            background-color: #f0f4f8;
+            color: #2d3748;
         }
 
         .neumorphic {
-            background: #e0e5ec;
-            box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px  rgba(255,255,255, 0.5);
+            background: #f0f4f8;
+            box-shadow: 5px 5px 10px #d1d9e6, -5px -5px 10px #ffffff;
+            border-radius: 15px;
         }
 
         .dark .neumorphic {
             background: #2d3748;
-            box-shadow: 9px 9px 16px rgba(0,0,0,0.4), -9px -9px 16px  rgba(255,255,255,0.1);
+            box-shadow: 5px 5px 10px #1a202c, -5px -5px 10px #4a5568;
         }
 
-        #vanta-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+        .dark {
+            background-color: #1a202c;
+            color: #e2e8f0;
         }
     </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
-    <div id="vanta-bg"></div>
-    <nav class="neumorphic fixed w-full top-0 z-50 p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold">QuantumFuse</a>
-            <div class="space-x-4">
-                <a href="#features" class="hover:text-blue-500 transition-colors">Features</a>
-                <a href="#technology" class="hover:text-blue-500 transition-colors">Technology</a>
-                <a href="#tokenomics" class="hover:text-blue-500 transition-colors">Tokenomics</a>
-                <a href="#governance" class="hover:text-blue-500 transition-colors">Governance</a>
-                <a href="#sustainability" class="hover:text-blue-500 transition-colors">Sustainability</a>
-                <button id="darkModeToggle" class="ml-4 p-2 rounded-full neumorphic">🌓</button>
-            </div>
-        </div>
-    </nav>
+<body class="transition-colors duration-300">
+    <div id="background"></div>
+    <div id="root" class="container mx-auto px-4 py-8">
+        <!-- React components will be rendered here -->
+    </div>
 
-    <header class="pt-32 pb-20 text-center">
-        <h1 class="text-5xl font-bold mb-4">Welcome to QuantumFuse Blockchain</h1>
-        <p class="text-xl mb-8">The next generation of decentralized technology</p>
-        <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300">Get Started</a>
-    </header>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
-    <main class="container mx-auto px-4">
-        <section id="live-data" class="my-20">
-            <h2 class="text-3xl font-bold mb-8">Live Blockchain Data</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="neumorphic p-6 rounded-lg text-center">
-                    <h3 class="text-xl font-bold mb-4">Live Transactions</h3>
-                    <p id="live-transactions" class="text-3xl font-bold">0</p>
-                </div>
-                <div class="neumorphic p-6 rounded-lg text-center">
-                    <h3 class="text-xl font-bold mb-4">Latest Blocks</h3>
-                    <p id="latest-blocks" class="text-3xl font-bold">0</p>
-                </div>
-                <div class="neumorphic p-6 rounded-lg text-center">
-                    <h3 class="text-xl font-bold mb-4">Connected Nodes</h3>
-                    <p id="connected-nodes" class="text-3xl font-bold">0</p>
-                </div>
-                <div class="neumorphic p-6 rounded-lg text-center">
-                    <h3 class="text-xl font-bold mb-4">Network Hash Rate</h3>
-                    <p id="network-hash-rate" class="text-3xl font-bold">0 H/s</p>
-                </div>
-            </div>
-        </section>
+    <script type="text/babel">
+        // React components will be defined here
+        
+        // Main App component
+        const App = () => {
+            const [isDarkMode, setIsDarkMode] = React.useState(false);
 
-        <section id="features" class="my-20">
-            <h2 class="text-3xl font-bold mb-8">Key Features</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="neumorphic p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4">Sharded Architecture</h3>
-                    <p>Utilizes multiple shards for enhanced scalability and throughput.</p>
-                </div>
-                <div class="neumorphic p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4">Cross-Shard Transactions</h3>
-                    <p>Seamless transactions between different shards for improved efficiency.</p>
-                </div>
-                <div class="neumorphic p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4">Dynamic Shard Allocation</h3>
-                    <p>Automatically adjusts the number of shards based on network load.</p>
-                </div>
-                <div class="neumorphic p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4">Core Blockchain in Python</h3>
-                    <p>High-performance and secure blockchain infrastructure with PoS.</p>
-                </div>
-                <div class="neumorphic p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4">Node Implementation in Go</h3>
-                    <p>Efficient networking and IPFS integration.</p>
-                </div>
-                <div class="neumorphic p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4">Quantum Computing Simulation</h3>
-                    <p>Future-proof blockchain with Qiskit integration.</p>
-                </div>
-            </div>
-        </section>
+            React.useEffect(() => {
+                VANTA.NET({
+                    el: "#background",
+                    mouseControls: true,
+                    touchControls: true,
+                    gyroControls: false,
+                    minHeight: 200.00,
+                    minWidth: 200.00,
+                    scale: 1.00,
+                    scaleMobile: 1.00,
+                    color: isDarkMode ? 0x3a5f8f : 0x3e9fff,
+                    backgroundColor: isDarkMode ? 0x1a202c : 0xf0f4f8,
+                    points: 20.00,
+                    maxDistance: 30.00,
+                    spacing: 15.00
+                });
+            }, [isDarkMode]);
 
-        <section id="technology" class="my-20">
-            <h2 class="text-3xl font-bold mb-8">Technology</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="neumorphic p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4">Consensus Mechanism</h3>
-                    <p>Implements both Proof of Stake (PoS) and Proof of Authority (PoA) for flexible consensus.</p>
-                </div>
-                <div class="neumorphic p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4">Smart Contracts</h3>
-                    <p>Supports upgradeable smart contracts with proxy patterns for enhanced flexibility.</p>
-                </div>
-            </div>
-            <div class="mt-8">
-                <h3 class="text-2xl font-bold mb-4">Technology Stack</h3>
-                <div class="flex flex-wrap justify-center gap-4">
-                    <span class="bg-blue-500 text-white px-3 py-1 rounded-full">Python</span>
-                    <span class="bg-blue-500 text-white px-3 py-1 rounded-full">Go</span>
-                    <span class="bg-blue-500 text-white px-3 py-1 rounded-full">Qiskit</span>
-                    <span class="bg-blue-500 text-white px-3 py-1 rounded-full">IPFS</span>
-                    <span class="bg-blue-500 text-white px-3 py-1 rounded-full">AI</span>
-                    <span class="bg-blue-500 text-white px-3 py-1 rounded-full">Blockchain</span>
-                </div>
-            </div>
-        </section>
+            const toggleDarkMode = () => {
+                setIsDarkMode(!isDarkMode);
+                document.body.classList.toggle('dark');
+            };
 
-        <section id="smart-contracts" class="my-20">
-            <h2 class="text-3xl font-bold mb-8">Smart Contracts & NFTs</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="neumorphic p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4">Deploy Smart Contract</h3>
-                    <textarea id="smart-contract-code" class="w-full h-32 p-2 mb-4 rounded" placeholder="Enter your smart contract code here"></textarea>
-                    <button id="deploy-contract" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Deploy</button>
+            return (
+                <div className={`${isDarkMode ? 'dark' : ''}`}>
+                    <Header toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
+                    <Hero />
+                    <LiveBlockchainData />
+                    <KeyFeatures />
+                    <Technology />
+                    <SmartContractsNFTs />
+                    <Tokenomics />
+                    <Governance />
+                    <Sustainability />
+                    <UseCases />
+                    <AdvancedFeatures />
+                    <ARVRXRSection />
+                    <CommunityWallet />
+                    <FounderWallet />
+                    <FusionReactor />
+                    <Footer />
                 </div>
-                <div class="neumorphic p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4">Mint NFT</h3>
-                    <input type="text" id="nft-name" class="w-full p-2 mb-4 rounded" placeholder="NFT Name">
-                    <input type="text" id="nft-description" class="w-full p-2 mb-4 rounded" placeholder="NFT Description">
-                    <div class="flex items-center mb-4">
-                        <input type="checkbox" id="fractionalize-nft" class="mr-2">
-                        <label for="fractionalize-nft">Fractionalize?</label>
-                    </div>
-                    <button id="mint-nft" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Mint NFT</button>
-                </div>
-            </div>
-        </section>
+            );
+        };
 
-        <section id="tokenomics" class="my-20">
-            <h2 class="text-3xl font-bold mb-8">Tokenomics</h2>
-            <div class="neumorphic p-6 rounded-lg">
-                <h3 class="text-xl font-bold mb-4">Dual Token System</h3>
-                <p>QFC (QuantumFuse Coin) for transactions and QET (QuantumFuse Energy Token) for network operations.</p>
-                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <p><strong>QFC Mining Reward:</strong> <span id="qfcReward"></span></p>
-                        <p><strong>QET Mining Reward:</strong> <span id="qetReward"></span></p>
-                    </div>
-                    <div>
-                        <p><strong>QFC Transaction Fee:</strong> <span id="qfcFee"></span></p>
-                        <p><strong>QET Transaction Fee:</strong> <span id="qetFee"></span></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="governance" class="my-20">
-            <h2 class="text-3xl font-bold mb-8">Governance</h2>
-            <div class="neumorphic p-6 rounded-lg">
-                <h3 class="text-xl font-bold mb-4">Decentralized Governance</h3>
-                <p>Stakeholders can propose and vote on network changes, ensuring a truly decentralized ecosystem.</p>
-                <div class="mt-4">
-                    <h4 class="text-lg font-bold mb-2">Create Proposal</h4>
-                    <textarea id="proposal-description" class="w-full h-32 p-2 mb-4 rounded" placeholder="Enter your proposal description"></textarea>
-                    <button id="submit-proposal" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Submit Proposal</button>
-                </div>
-                <div class="mt-4">
-                    <h4 class="text-lg font-bold mb-2">Active Proposals</h4>
-                    <ul id="active-proposals" class="list-disc pl-5">
-                        <!-- Active proposals will be dynamically added here -->
+        // Header component
+        const Header = ({ toggleDarkMode, isDarkMode }) => (
+            <header className="flex justify-between items-center mb-8">
+                <h1 className="text-3xl font-bold">QuantumFuse</h1>
+                <nav>
+                    <ul className="flex space-x-4">
+                        <li><a href="#features" className="hover:text-blue-500">Features</a></li>
+                        <li><a href="#technology" className="hover:text-blue-500">Technology</a></li>
+                        <li><a href="#tokenomics" className="hover:text-blue-500">Tokenomics</a></li>
+                        <li><a href="#governance" className="hover:text-blue-500">Governance</a></li>
+                        <li><a href="#sustainability" className="hover:text-blue-500">Sustainability</a></li>
+                        <li>
+                            <button onClick={toggleDarkMode} className="p-2 rounded-full neumorphic">
+                                {isDarkMode ? '🌞' : '🌙'}
+                            </button>
+                        </li>
                     </ul>
+                </nav>
+            </header>
+        );
+
+        // Hero component
+        const Hero = () => (
+            <section className="text-center my-16">
+                <h2 className="text-4xl font-bold mb-4">Welcome to QuantumFuse Blockchain</h2>
+                <p className="text-xl mb-8">The next generation of decentralized technology</p>
+                <button className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition-colors duration-300">
+                    Get Started
+                </button>
+            </section>
+        );
+
+        // LiveBlockchainData component
+        const LiveBlockchainData = () => (
+            <section className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
+                <div className="neumorphic p-6 text-center">
+                    <h3 className="text-2xl font-bold mb-2">Live Transactions</h3>
+                    <p className="text-4xl font-bold text-blue-500">0</p>
                 </div>
-            </div>
-        </section>
-
-        <section id="sustainability" class="my-20">
-            <h2 class="text-3xl font-bold mb-8">Sustainability</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="neumorphic p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4">Energy-Efficient Consensus</h3>
-                    <p>Our PoS and PoA mechanisms significantly reduce energy consumption compared to traditional PoW systems.</p>
+                <div className="neumorphic p-6 text-center">
+                    <h3 className="text-2xl font-bold mb-2">Latest Blocks</h3>
+                    <p className="text-4xl font-bold text-blue-500">0</p>
                 </div>
-                <div class="neumorphic p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4">Green Staking</h3>
-                    <p>Earn rewards while supporting eco-friendly practices through green staking initiatives.</p>
-                    <button id="stake-tokens" class="mt-4 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Stake Tokens</button>
+                <div className="neumorphic p-6 text-center">
+                    <h3 className="text-2xl font-bold mb-2">Connected Nodes</h3>
+                    <p className="text-4xl font-bold text-blue-500">0</p>
                 </div>
-            </div>
-            <div class="mt-8 neumorphic p-6 rounded-lg">
-                <h3 class="text-xl font-bold mb-4">Carbon Credits</h3>
-                <p>Offset your carbon footprint with our integrated blockchain-based carbon credits system.</p>
-                <div class="mt-4">
-                    <p><strong>Your estimated carbon footprint:</strong> <span id="carbon-footprint">0</span> tons CO2e</p>
-                    <p><strong>Carbon credits needed:</strong> <span id="carbon-credits-needed">0</span></p>
-                    <button id="purchase-credits" class="mt-4 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Purchase Credits</button>
+                <div className="neumorphic p-6 text-center">
+                    <h3 className="text-2xl font-bold mb-2">Network Hash Rate</h3>
+                    <p className="text-4xl font-bold text-blue-500">0 H/s</p>
                 </div>
-            </div>
-        </section>
+            </section>
+        );
 
-        <section id="use-cases" class="my-20">
-            <h2 class="text-3xl font-bold mb-8">Use Cases</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="neumorphic p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4">Decentralized Identity Management</h3>
-                    <p>Implement secure, privacy-preserving digital identities on the QuantumFuse blockchain.</p>
+        // KeyFeatures component
+        const KeyFeatures = () => (
+            <section id="features" className="mb-16">
+                <h2 className="text-3xl font-bold mb-8">Key Features</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-2">Sharded Architecture</h3>
+                        <p>Utilizes multiple shards for enhanced scalability and throughput.</p>
+                    </div>
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-2">Cross-Shard Transactions</h3>
+                        <p>Seamless transactions between different shards for improved efficiency.</p>
+                    </div>
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-2">Dynamic Shard Allocation</h3>
+                        <p>Automatically adjusts the number of shards based on network load.</p>
+                    </div>
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-2">Core Blockchain in Python</h3>
+                        <p>High-performance and secure blockchain infrastructure with PoS.</p>
+                    </div>
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-2">Node Implementation in Go</h3>
+                        <p>Efficient networking and IPFS integration.</p>
+                    </div>
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-2">Quantum Computing Simulation</h3>
+                        <p>Future-proof blockchain with Qiskit integration.</p>
+                    </div>
                 </div>
-                <div class="neumorphic p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4">Sustainable E-commerce</h3>
-                    <p>Leverage blockchain for a decentralized marketplace with trustless transactions and green logistics.</p>
+            </section>
+        );
+
+        // Technology component
+        const Technology = () => (
+            <section id="technology" className="mb-16">
+                <h2 className="text-3xl font-bold mb-8">Technology</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-4">Consensus Mechanism</h3>
+                        <p>Implements both Proof of Stake (PoS) and Proof of Authority (PoA) for flexible consensus.</p>
+                    </div>
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-4">Smart Contracts</h3>
+                        <p>Supports upgradeable smart contracts with proxy patterns for enhanced flexibility.</p>
+                    </div>
                 </div>
-                <div class="neumorphic p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4">Smart Contracts & NFTs</h3>
-                    <p>Manage standard and fractional NFTs with live metadata updates and secure smart contracts.</p>
+                <div className="mt-8">
+                    <h3 className="text-xl font-bold mb-4">Technology Stack</h3>
+                    <div className="flex flex-wrap gap-4">
+                        <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">Python</span>
+                        <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">Go</span>
+                        <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">Qiskit</span>
+                        <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">IPFS</span>
+                        <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">AI</span>
+                        <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">Blockchain</span>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        );
 
-        <section id="advanced-features" class="my-20">
-            <h2 class="text-3xl font-bold mb-8">Advanced Features</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="neumorphic p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4">AI-Driven Analytics</h3>
-                    <button id="predictive-analytics" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded mb-2">Run Predictive Analytics</button>
-                    <button id="anomaly-detection" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded">Detect Anomalies</button>
+        // SmartContractsNFTs component
+        const SmartContractsNFTs = () => (
+            <section className="mb-16">
+                <h2 className="text-3xl font-bold mb-8">Smart Contracts & NFTs</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-4">Deploy Smart Contract</h3>
+                        <textarea className="w-full p-2 mb-4 border rounded" rows="4" placeholder="Enter your smart contract code"></textarea>
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300">
+                            Deploy
+                        </button>
+                    </div>
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-4">Mint NFT</h3>
+                        <input type="file" className="mb-4" />
+                        <div className="flex items-center mb-4">
+                            <label className="mr-2">Fractionalize?</label>
+                            <input type="checkbox" />
+                        </div>
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300">
+                            Mint NFT
+                        </button>
+                    </div>
                 </div>
-                <div class="neumorphic p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4">Quantum Computing Simulation</h3>
-                    <button id="run-quantum-sim" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Run Quantum Simulation</button>
+            </section>
+        );
+
+        // Tokenomics component
+        const Tokenomics = () => (
+            <section id="tokenomics" className="mb-16">
+                <h2 className="text-3xl font-bold mb-8">Tokenomics</h2>
+                <div className="neumorphic p-6">
+                    <h3 className="text-xl font-bold mb-4">Dual Token System</h3>
+                    <p className="mb-4">QFC (QuantumFuse Coin) for transactions and QET (QuantumFuse Energy Token) for network operations.</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <p className="font-bold">QFC Mining Reward:</p>
+                            <p className="text-blue-500">5 QFC per block</p>
+                        </div>
+                        <div>
+                            <p className="font-bold">QET Mining Reward:</p>
+                            <p className="text-blue-500">2 QET per block</p>
+                        </div>
+                        <div>
+                            <p className="font-bold">QFC Transaction Fee:</p>
+                            <p className="text-blue-500">0.1% of transaction value</p>
+                        </div>
+                        <div>
+                            <p className="font-bold">QET Transaction Fee:</p>
+                            <p className="text-blue-500">0.05% of transaction value</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        );
 
-        <section id="visualization" class="my-20">
-            <h2 class="text-3xl font-bold mb-8">Network Visualization</h2>
-            <div class="neumorphic p-6 rounded-lg">
-                <canvas id="network-visualization" width="800" height="400"></canvas>
-            </div>
-        </section>
-    </main>
+        // Governance component
+        const Governance = () => (
+            <section id="governance" className="mb-16">
+                <h2 className="text-3xl font-bold mb-8">Governance</h2>
+                <div className="neumorphic p-6">
+                    <h3 className="text-xl font-bold mb-4">Decentralized Governance</h3>
+                    <p className="mb-4">Stakeholders can propose and vote on network changes, ensuring a truly decentralized ecosystem.</p>
+                    <div className="mb-4">
+                        <input type="text" placeholder="Enter proposal title" className="w-full p-2 mb-2 border rounded" />
+                        <textarea placeholder="Enter proposal description" className="w-full p-2 mb-2 border rounded" rows="4"></textarea>
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300">
+                            Submit Proposal
+                        </button>
+                    </div>
+                    <div>
+                        <h4 className="font-bold mb-2">Active Proposals</h4>
+                        <ul className="list-disc list-inside">
+                            <li>Proposal 1: Increase block size</li>
+                            <li>Proposal 2: Add new consensus algorithm</li>
+                            <li>Proposal 3: Update staking rewards</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        );
 
-    <footer class="bg-gray-200 dark:bg-gray-800 py-8">
-        <div class="container mx-auto px-4 text-center">
-            <p>&copy; 2023 QuantumFuse Blockchain. All rights reserved.</p>
-        </div>
-    </footer>
+        // Sustainability component
+        const Sustainability = () => (
+            <section id="sustainability" className="mb-16">
+                <h2 className="text-3xl font-bold mb-8">Sustainability</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-4">Energy-Efficient Consensus</h3>
+                        <p>Our PoS and PoA mechanisms significantly reduce energy consumption compared to traditional PoW systems.</p>
+                    </div>
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-4">Green Staking</h3>
+                        <p>Earn rewards while supporting eco-friendly practices through green staking initiatives.</p>
+                        <button className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors duration-300">
+                            Stake Tokens
+                        </button>
+                    </div>
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-4">Carbon Credits</h3>
+                        <p>Offset your carbon footprint with our integrated blockchain-based carbon credits system.</p>
+                        <div className="mt-4">
+                            <p>Your estimated carbon footprint:</p>
+                            <p className="text-2xl font-bold text-green-500">0 tons CO2e</p>
+                            <p>Carbon credits needed:</p>
+                            <p className="text-2xl font-bold text-green-500">0</p>
+                            <button className="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors duration-300">
+                                Purchase Credits
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
 
-    <script>
-        // Dark mode toggle
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        const body = document.body;
+        // UseCases component
+        const UseCases = () => (
+            <section className="mb-16">
+                <h2 className="text-3xl font-bold mb-8">Use Cases</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-4">Decentralized Identity Management</h3>
+                        <p>Implement secure, privacy-preserving digital identities on the QuantumFuse blockchain.</p>
+                    </div>
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-4">Sustainable E-commerce</h3>
+                        <p>Leverage blockchain for a decentralized marketplace with trustless transactions and green logistics.</p>
+                    </div>
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-4">Smart Contracts & NFTs</h3>
+                        <p>Manage standard and fractional NFTs with live metadata updates and secure smart contracts.</p>
+                    </div>
+                </div>
+            </section>
+        );
 
-        darkModeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark');
-        });
+        // AdvancedFeatures component
+        const AdvancedFeatures = () => (
+            <section className="mb-16">
+                <h2 className="text-3xl font-bold mb-8">Advanced Features</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-4">AI-Driven Analytics</h3>
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300 mr-2">
+                            Run Predictive Analytics
+                        </button>
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300">
+                            Detect Anomalies
+                        </button>
+                    </div>
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-4">Quantum Computing Simulation</h3>
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300">
+                            Run Quantum Simulation
+                        </button>
+                    </div>
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-4">Network Visualization</h3>
+                        <div id="network-viz" className="w-full h-48 bg-gray-200 rounded"></div>
+                    </div>
+                </div>
+            </section>
+        );
 
-        // Vanta.js background
-        VANTA.NET({
-            el: "#vanta-bg",
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.00,
-            minWidth: 200.00,
-            scale: 1.00,
-            scaleMobile: 1.00,
-            color: 0x3f51b5,
-            backgroundColor: 0xffffff,
-            points: 10.00,
-            maxDistance: 20.00,
-            spacing: 17.00
-        });
+        // New components for the extra modules
 
-        // Simulated live data updates
-        function updateLiveData() {
-            document.getElementById('live-transactions').textContent = Math.floor(Math.random() * 1000);
-            document.getElementById('latest-blocks').textContent = Math.floor(Math.random() * 100);
-            document.getElementById('connected-nodes').textContent = Math.floor(Math.random() * 500);
-            document.getElementById('network-hash-rate').textContent = (Math.random() * 100).toFixed(2) + ' TH/s';
-        }
+        // ARVRXRSection component
+        const ARVRXRSection = () => (
+            <section className="mb-16">
+                <h2 className="text-3xl font-bold mb-8">AR/VR/XR Integration</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-4">Immersive Blockchain Experience</h3>
+                        <p>Explore the QuantumFuse blockchain in a fully immersive AR/VR/XR environment.</p>
+                        <button className="mt-4 bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 transition-colors duration-300">
+                            Launch AR/VR/XR Mode
+                        </button>
+                    </div>
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-4">Quantum Magnetic Field Simulation</h3>
+                        <p>Experience the cutting-edge quantum magnetic field simulation in our AR/VR/XR environment.</p>
+                        <button className="mt-4 bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 transition-colors duration-300">
+                            Start Simulation
+                        </button>
+                    </div>
+                </div>
+            </section>
+        );
 
-        setInterval(updateLiveData, 5000);
+        // CommunityWallet component
+        const CommunityWallet = () => (
+            <section className="mb-16">
+                <h2 className="text-3xl font-bold mb-8">Community Wallet</h2>
+                <div className="neumorphic p-6">
+                    <h3 className="text-xl font-bold mb-4">Manage Community Funds</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <p className="font-bold">Current Balance:</p>
+                            <p className="text-blue-500">1,000,000 QFC</p>
+                        </div>
+                        <div>
+                            <p className="font-bold">Pending Proposals:</p>
+                            <p className="text-blue-500">5</p>
+                        </div>
+                    </div>
+                    <button className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors duration-300">
+                        Create New Proposal
+                    </button>
+                </div>
+            </section>
+        );
 
-        // Fetch and display tokenomics data
-        const qfcReward = document.getElementById('qfcReward');
-        const qetReward = document.getElementById('qetReward');
-        const qfcFee = document.getElementById('qfcFee');
-        const qetFee = document.getElementById('qetFee');
+        // FounderWallet component
+        const FounderWallet = () => (
+            <section className="mb-16">
+                <h2 className="text-3xl font-bold mb-8">Founder Wallet</h2>
+                <div className="neumorphic p-6">
+                    <h3 className="text-xl font-bold mb-4">Secure Founder Transactions</h3>
+                    <p>Manage founder transactions with enhanced security using SGX enclaves.</p>
+                    <button className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors duration-300">
+                        Access Founder Wallet
+                    </button>
+                </div>
+            </section>
+        );
 
-        // Simulating API call to fetch data
-        setTimeout(() => {
-            qfcReward.textContent = '10 QFC';
-            qetReward.textContent = '1 QET';
-            qfcFee.textContent = '0.1 QFC';
-            qetFee.textContent = '0.01 QET';
-        }, 1000);
+        // FusionReactor component
+        const FusionReactor = () => (
+            <section className="mb-16">
+                <h2 className="text-3xl font-bold mb-8">Fusion Reactor Integration</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-4">Reactor Status</h3>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <p className="font-bold">Energy Output:</p>
+                                <p className="text-blue-500">1000.0 MJ</p>
+                            </div>
+                            <div>
+                                <p className="font-bold">Core Temperature:</p>
+                                <p className="text-blue-500">50,000,000 K</p>
+                            </div>
+                            <div>
+                                <p className="font-bold">Impurity Level:</p>
+                                <p className="text-blue-500">0.01</p>
+                            </div>
+                            <div>
+                                <p className="font-bold">Stability Factor:</p>
+                                <p className="text-blue-500">1.0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="neumorphic p-6">
+                        <h3 className="text-xl font-bold mb-4">Reactor Controls</h3>
+                        <button className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition-colors duration-300 mr-2">
+                            Generate Energy
+                        </button>
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300 mr-2">
+                            Monitor Plasma
+                        </button>
+                        <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors duration-300">
+                            Optimize Performance
+                        </button>
+                    </div>
+                </div>
+            </section>
+        );
 
-        // Network visualization
-        const ctx = document.getElementById('network-visualization').getContext('2d');
-        new Chart(ctx, {
-            type: 'bubble',
-            data: {
-                datasets: [{
-                    label: 'Network Nodes',
-                    data: Array.from({length: 50}, () => ({
-                        x: Math.random() * 100,
-                        y: Math.random() * 100,
-                        r: Math.random() * 10
-                    })),
-                    backgroundColor: 'rgba(75, 192, 192, 0.6)'
-                }]
-            },
-            options: {
-                responsive: true,
-                title: {
-                    display: true,
-                    text: 'QuantumFuse Network Visualization'
-                },
-                scales: {
-                    x: {
-                        type: 'linear',
-                        position: 'bottom'
-                    },
-                    y: {
-                        type: 'linear',
-                        position: 'left'
-                    }
-                }
-            }
-        });
+        // Footer component
+        const Footer = () => (
+            <footer className="text-center mt-16">
+                <p>&copy; 2023 QuantumFuse Blockchain. All rights reserved.</p>
+            </footer>
+        );
 
-        // Add event listeners for buttons
-        document.getElementById('deploy-contract').addEventListener('click', () => alert('Smart contract deployed!'));
-        document.getElementById('mint-nft').addEventListener('click', () => alert('NFT minted successfully!'));
-        document.getElementById('submit-proposal').addEventListener('click', () => alert('Proposal submitted for voting!'));
-        document.getElementById('stake-tokens').addEventListener('click', () => alert('Tokens staked successfully!'));
-        document.getElementById('purchase-credits').addEventListener('click', () => alert('Carbon credits purchased!'));
-        document.getElementById('predictive-analytics').addEventListener('click', () => alert('Running predictive analytics...'));
-        document.getElementById('anomaly-detection').addEventListener('click', () => alert('Detecting anomalies...'));
-        document.getElementById('run-quantum-sim').addEventListener('click', () => alert('Quantum simulation initiated...'));
+        // Render the App component
+        ReactDOM.render(<App />, document.getElementById('root'));
     </script>
 </body>
-    </html>
-    
+</html>
