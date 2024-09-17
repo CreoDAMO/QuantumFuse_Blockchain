@@ -97,9 +97,4 @@ jobs:
 
     - name: Run Docker container
       run: make docker_run
-
-lets update the Make CI to 
-
-- name: Install dependencies
-  run: |
-    npm install
+      
