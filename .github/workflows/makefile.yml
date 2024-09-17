@@ -59,23 +59,29 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
 
-    - name: Install dependencies
+    - name: Install Go and Python dependencies
       run: |
         make setup-go
         make setup-python
-        make setup-node
+
+    - name: Install Node.js dependencies
+      run: |
+        cd QuantumFuse_Blockchain/quantumfuse_dapp
+        npm install
 
     - name: Build project
       run: |
         make build-go
         make build-python
-        make build-node
+        cd QuantumFuse_Blockchain/quantumfuse_dapp
+        npm run build
 
     - name: Run tests
       run: |
         make test-go
         make test-python
-        make test-node
+        cd QuantumFuse_Blockchain/quantumfuse_dapp
+        npm test
 
     - name: Lint the code
       run: |
