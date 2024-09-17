@@ -26,7 +26,8 @@
   "devDependencies": {
     "eslint": "8.57.1",
     "prettier": "3.3.3",
-    "@testing-library/jest-dom": "6.5.0"
+    "@testing-library/jest-dom": "6.5.0",
+    "@testing-library/react": "16.0.1"
   },
   "browserslist": {
     "production": [
