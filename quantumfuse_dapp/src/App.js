@@ -1,148 +1,57 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { w3cwebsocket as W3CWebSocket } from 'websocket';
-import { Line, Bar } from 'react-chartjs-2';
-import 'chart.js/auto';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import styled, { ThemeProvider } from 'styled-components';
+import Header from './components/Header';
+import Hero from './components/Hero';
+import LiveData from './components/LiveData';
+import Features from './components/Features';
+import Technology from './components/Technology';
+import Tokenomics from './components/Tokenomics';
+import Governance from './components/Governance';
+import Sustainability from './components/Sustainability';
+import UseCases from './components/UseCases';
+import Footer from './components/Footer';
 
-const client = new W3CWebSocket('wss://api.quantumfuse.com/v2/realtime');
+const lightTheme = {
+  background: '#f0f0f0',
+  text: '#333',
+  primary: '#4a90e2',
+};
+
+const darkTheme = {
+  background: '#222',
+  text: '#f0f0f0',
+  primary: '#61dafb',
+};
+
+const AppContainer = styled.div`
+  font-family: 'Arial', sans-serif;
+  background-color: ${props => props.theme.background};
+  color: ${props => props.theme.text};
+  min-height: 100vh;
+`;
 
 function App() {
-  const [blocks, setBlocks] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredBlocks, setFilteredBlocks] = useState([]);
-  const [chartData, setChartData] = useState({});
-  const [transactionData, setTransactionData] = useState({});
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  useEffect(() => {
-    client.onopen = () => {
-      console.log('WebSocket Client Connected');
-    };
-
-    client.onmessage = (message) => {
-      const block = JSON.parse(message.data);
-      setBlocks((prevBlocks) => [block, ...prevBlocks]);
-    };
-
-    return () => {
-      client.close();
-    };
-  }, []);
-
-  useEffect(() => {
-    const blockIndexes = blocks.map((block) => block.index);
-    const blockTimestamps = blocks.map((block) => new Date(block.timestamp * 1000));
-    setChartData({
-      labels: blockTimestamps,
-      datasets: [
-        {
-          label: 'Block Index',
-          data: blockIndexes,
-          fill: false,
-          borderColor: 'rgb(75, 192, 192)',
-          tension: 0.1,
-        },
-      ],
-    });
-
-    const transactions = blocks.flatMap(block => block.transactions);
-    const transactionAmounts = transactions.map(tx => tx.amount);
-    setTransactionData({
-      labels: transactions.map(tx => `${tx.sender} -> ${tx.recipient}`),
-      datasets: [
-        {
-          label: 'Transaction Amount',
-          data: transactionAmounts,
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1,
-        },
-      ],
-    });
-
-    setFilteredBlocks(
-      blocks.filter((block) =>
-        block.transactions.some(
-          (transaction) =>
-            transaction.sender.includes(searchTerm) || transaction.recipient.includes(searchTerm)
-        )
-      )
-    );
-  }, [blocks, searchTerm]);
-
-  const handleSearch = useCallback(() => {
-    setFilteredBlocks(
-      blocks.filter((block) =>
-        block.transactions.some(
-          (transaction) =>
-            transaction.sender.includes(searchTerm) || transaction.recipient.includes(searchTerm)
-        )
-      )
-    );
-  }, [blocks, searchTerm]);
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>QuantumFuse Explorer</h1>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <main>
-        <div>
-          <h2>Real-Time Blockchain Blocks</h2>
-          <ul>
-            {blocks.map((block) => (
-              <li key={block.index}>
-                Block {block.index} - Timestamp: {new Date(block.timestamp * 1000).toLocaleString()}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h2>Search Transactions</h2>
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search by sender or recipient..."
-          />
-          <button onClick={handleSearch}>Search</button>
-          <ul>
-            {filteredBlocks.map((block) => (
-              <li key={block.index}>
-                Block {block.index} - Timestamp: {new Date(block.timestamp * 1000).toLocaleString()}
-                <ul>
-                  {block.transactions.map((transaction, idx) => (
-                    <li key={idx}>
-                      Sender: {transaction.sender}, Recipient: {transaction.recipient}, Amount: {transaction.amount}
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h2>Blockchain Chart</h2>
-          <Line data={chartData} />
-        </div>
-        <div>
-          <h2>Transaction Data</h2>
-          <Bar data={transactionData} />
-        </div>
-      </main>
-    </div>
+    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+      <AppContainer>
+        <Header toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
+        <Hero />
+        <LiveData />
+        <Features />
+        <Technology />
+        <Tokenomics />
+        <Governance />
+        <Sustainability />
+        <UseCases />
+        <Footer />
+      </AppContainer>
+    </ThemeProvider>
   );
 }
 
