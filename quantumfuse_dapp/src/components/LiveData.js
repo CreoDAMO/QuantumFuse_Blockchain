@@ -47,24 +47,28 @@ const LiveData = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const props = useSpring({ ...data });
+  // Create individual animations for each value
+  const transactionsSpring = useSpring({ number: data.transactions, from: { number: 0 } });
+  const blocksSpring = useSpring({ number: data.blocks, from: { number: 0 } });
+  const nodesSpring = useSpring({ number: data.nodes, from: { number: 0 } });
+  const hashRateSpring = useSpring({ number: data.hashRate, from: { number: 0 } });
 
   return (
     <LiveDataContainer>
       <DataItem>
-        <DataValue>{props.transactions.interpolate(val => Math.floor(val))}</DataValue>
+        <DataValue>{transactionsSpring.number.interpolate(val => Math.floor(val))}</DataValue>
         <DataLabel>Live Transactions</DataLabel>
       </DataItem>
       <DataItem>
-        <DataValue>{props.blocks.interpolate(val => Math.floor(val))}</DataValue>
+        <DataValue>{blocksSpring.number.interpolate(val => Math.floor(val))}</DataValue>
         <DataLabel>Latest Blocks</DataLabel>
       </DataItem>
       <DataItem>
-        <DataValue>{props.nodes.interpolate(val => Math.floor(val))}</DataValue>
+        <DataValue>{nodesSpring.number.interpolate(val => Math.floor(val))}</DataValue>
         <DataLabel>Connected Nodes</DataLabel>
       </DataItem>
       <DataItem>
-        <DataValue>{props.hashRate.interpolate(val => Math.floor(val))} H/s</DataValue>
+        <DataValue>{hashRateSpring.number.interpolate(val => Math.floor(val))} H/s</DataValue>
         <DataLabel>Network Hash Rate</DataLabel>
       </DataItem>
     </LiveDataContainer>
