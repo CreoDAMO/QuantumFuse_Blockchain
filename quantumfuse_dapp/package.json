@@ -26,7 +26,6 @@
   "devDependencies": {
     "eslint": "8.57.1",
     "prettier": "3.3.3",
-    "@testing-library/jest-dom": "6.5.0",
     "@testing-library/react-dom": "16.0.1",
     "@babel/plugin-proposal-private-property-in-object": "^7.14.5"
   },
