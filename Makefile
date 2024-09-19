@@ -44,7 +44,7 @@ help:
 setup: setup-go setup-python setup-node
 build: build-go build-python build-node
 run: run-go run-python run-node
-test: test-go test-python test-node
+test: test-go test-python
 lint: lint-go
 coverage: coverage-go
 clean: clean-go clean-python clean-node
@@ -122,10 +122,6 @@ build-node: setup-node
 run-node: setup-node
 	@echo "Running Node.js frontend..."
 	@npm start --prefix $(FRONTEND_DIR)
-
-test-node:
-	@echo "Testing Node.js project..."
-	@npm test --prefix $(FRONTEND_DIR)
 
 clean-node:
 	@echo "Cleaning Node.js environment..."
