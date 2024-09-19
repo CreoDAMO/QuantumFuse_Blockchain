@@ -29,46 +29,20 @@ jobs:
       with:
         node-version: '20'
 
-    - name: Install protoc
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y protobuf-compiler libprotobuf-dev
-
-    - name: Set up Go cache
-      uses: actions/cache@v3
-      with:
-        path: ~/go/pkg/mod
-        key: ${{ runner.os }}-go-${{ hashFiles('node/src/go.sum') }}
-        restore-keys: |
-          ${{ runner.os }}-go-
-
-    - name: Set up Python cache
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-python-${{ hashFiles('core/src/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-python-
-
-    - name: Set up Node.js cache
-      uses: actions/cache@v3
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('quantumfuse_dapp/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-
     - name: Install dependencies
       run: |
         make setup-go
         make setup-python
         make setup-node
 
-    - name: Build project
+    - name: Build Go project
       run: |
+        go build ./node/src/...  # Add your Go build command here
         make build-go
-        make build-python
-        make build-node
+
+    - name: Run Go vet (Static Analysis)
+      run: |
+        go vet ./node/src/...   # Analyze the Go files
 
     - name: Run tests
       run: |
