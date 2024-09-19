@@ -1,4 +1,4 @@
-name: Makefile CI
+name: QuantumFuse CI
 
 on:
   push:
@@ -8,14 +8,12 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - name: Check out the repository
       uses: actions/checkout@v3
 
-    # Set up Go, Python, and Node.js environments
     - name: Set up Go
       uses: actions/setup-go@v3
       with:
@@ -31,13 +29,11 @@ jobs:
       with:
         node-version: '20'
 
-    # Install protoc
     - name: Install protoc
       run: |
         sudo apt-get update
         sudo apt-get install -y protobuf-compiler libprotobuf-dev
 
-    # Set up caches for Go, Python, and Node.js dependencies
     - name: Set up Go cache
       uses: actions/cache@v3
       with:
@@ -62,49 +58,34 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
 
-    # Install all dependencies (Go, Python, Node.js)
     - name: Install dependencies
       run: |
         make setup-go
         make setup-python
         make setup-node
 
-    # Build all components (Go, Python, Node.js)
     - name: Build project
       run: |
         make build-go
         make build-python
         make build-node
 
-    # Run tests for Go, Python, and Node.js
     - name: Run tests
       run: |
         make test-go
         make test-python
         make test-node
 
-    # Lint Go code
-    - name: Lint Go code
+    - name: Lint codebase
       run: |
         make lint-go
 
-    # Generate and upload coverage reports for Go
-    - name: Generate Go coverage report
+    - name: Generate coverage report
       run: |
         make coverage-go
 
-    # Upload Go coverage reports as artifacts
-    - name: Upload coverage reports
+    - name: Upload coverage report
       uses: actions/upload-artifact@v3
       with:
-        name: go-coverage-report
-        path: coverage.out
-
-    # Build and run Docker container for deployment
-    - name: Build Docker image
-      run: |
-        make docker_build
-
-    - name: Run Docker container
-      run: |
-        make docker_run
+        name: coverage-reports
+        path: node/src/coverage.out
