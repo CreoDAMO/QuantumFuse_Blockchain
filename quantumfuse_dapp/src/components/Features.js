@@ -68,7 +68,7 @@ const features = [
     description: 'High-performance and secure blockchain infrastructure with PoS.',
   },
   {
-    icon: <FaServer />, // Replaced FaGo with FaServer
+    icon: <FaServer />,
     title: 'Node Implementation in Go',
     description: 'Efficient networking and IPFS integration.',
   },
