@@ -76,10 +76,6 @@ jobs:
         make test-go
         make test-python
 
-    - name: Generate coverage reports
-      run: |
-        make coverage-go
-
     - name: Upload coverage reports
       uses: actions/upload-artifact@v3
       with:
