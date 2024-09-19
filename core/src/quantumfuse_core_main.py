@@ -359,7 +359,7 @@ class ShardedBlockchain:
         if transaction["token"] != "QFC":
             raise ValueError("Invalid QFC transaction")
         sender_balance = self.get_qfc_balance(transaction["from"])
-        if sender_balance < transaction["amount"] + self.q fc_transaction_fee:
+        if sender_balance < transaction["amount"] + self.qfc_transaction_fee:
             raise ValueError("Insufficient QFC balance")
         transaction["fee"] = self.qfc_transaction_fee
         shard.pending_transactions.append(transaction)
