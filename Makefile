@@ -27,7 +27,6 @@ help:
 	@echo "  build          - Build all components."
 	@echo "  run            - Run all components."
 	@echo "  test           - Run tests for all components."
-	@echo "  lint           - Lint the codebase."
 	@echo "  coverage       - Generate and publish coverage reports."
 	@echo "  clean          - Clean up all build artifacts."
 	@echo "  update         - Update all dependencies."
@@ -45,7 +44,6 @@ setup: setup-go setup-python setup-node
 build: build-go build-python build-node
 run: run-go run-python run-node
 test: test-go test-python
-lint: lint-go
 coverage: coverage-go
 clean: clean-go clean-python clean-node
 update: update-go update-python update-node
@@ -77,9 +75,6 @@ clean-go:
 update-go: setup-go
 	@echo "Updating Go dependencies..."
 	@go get -u -C $(GO_DIR)
-
-lint-go:
-	@golangci-lint run $(GO_DIR)
 
 coverage-go:
 	@go test -coverprofile=coverage.out -C $(GO_DIR)
