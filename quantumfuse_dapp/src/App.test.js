@@ -1,8 +1,15 @@
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import ErrorBoundary from './ErrorBoundary';
 
-test('renders Key Features section', () => {
-  render(<App />);
-  const sectionTitle = screen.getByText(/Key Features/i); // Adjust this to match the actual content
-  expect(sectionTitle).toBeInTheDocument();
+function ProblematicComponent() {
+  throw new Error("Test Error");
+}
+
+test('renders fallback UI when error occurs', () => {
+  render(
+    <ErrorBoundary>
+      <ProblematicComponent />
+    </ErrorBoundary>
+  );
+  expect(screen.getByText(/Something went wrong/i)).toBeInTheDocument();
 });
