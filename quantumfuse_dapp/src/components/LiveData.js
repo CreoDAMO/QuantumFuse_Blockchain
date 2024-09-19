@@ -34,6 +34,7 @@ const LiveData = () => {
     hashRate: 0,
   });
 
+  // Simulate live data updates every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setData({
@@ -44,10 +45,10 @@ const LiveData = () => {
       });
     }, 5000);
 
-    return () => clearInterval(interval);
+    return () => clearInterval(interval); // Clean up interval on component unmount
   }, []);
 
-  // Animate each value individually with `useSpring` and `to`
+  // Animate each value individually
   const transactionsSpring = useSpring({ number: data.transactions, from: { number: 0 } });
   const blocksSpring = useSpring({ number: data.blocks, from: { number: 0 } });
   const nodesSpring = useSpring({ number: data.nodes, from: { number: 0 } });
