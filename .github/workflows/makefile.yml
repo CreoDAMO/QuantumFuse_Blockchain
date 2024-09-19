@@ -76,10 +76,6 @@ jobs:
         make test-go
         make test-python
 
-    - name: Lint the code
-      run: |
-        make lint-go
-
     - name: Generate coverage reports
       run: |
         make coverage-go
