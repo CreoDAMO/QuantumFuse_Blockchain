@@ -7,14 +7,15 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
+
     runs-on: ubuntu-latest
 
     steps:
     - name: Check out the repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
 
+    # Set up Go, Python, and Node.js environments
     - name: Set up Go
       uses: actions/setup-go@v3
       with:
@@ -26,17 +27,19 @@ jobs:
         python-version: '3.12.6'
 
     - name: Set up Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v3
       with:
         node-version: '20'
 
+    # Install protoc
     - name: Install protoc
       run: |
         sudo apt-get update
         sudo apt-get install -y protobuf-compiler libprotobuf-dev
 
+    # Set up caches for Go, Python, and Node.js dependencies
     - name: Set up Go cache
-      uses: actions/cache@v4
+      uses: actions/cache@v3
       with:
         path: ~/go/pkg/mod
         key: ${{ runner.os }}-go-${{ hashFiles('node/src/go.sum') }}
@@ -44,62 +47,64 @@ jobs:
           ${{ runner.os }}-go-
 
     - name: Set up Python cache
-      uses: actions/cache@v4
+      uses: actions/cache@v3
       with:
         path: ~/.cache/pip
-        key:  ${{ runner.os }}-python-${{ hashFiles('core/src/requirements.txt') }}
+        key: ${{ runner.os }}-python-${{ hashFiles('core/src/requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-python-
 
     - name: Set up Node.js cache
-      uses: actions/cache@v4
+      uses: actions/cache@v3
       with:
         path: ~/.npm
         key: ${{ runner.os }}-node-${{ hashFiles('quantumfuse_dapp/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
 
-    - name: Install Go and Python dependencies
+    # Install all dependencies (Go, Python, Node.js)
+    - name: Install dependencies
       run: |
         make setup-go
         make setup-python
+        make setup-node
 
-    - name: Install Node.js dependencies
-      run: |
-        cd QuantumFuse_Blockchain/quantumfuse_dapp
-        npm install
-
+    # Build all components (Go, Python, Node.js)
     - name: Build project
       run: |
         make build-go
         make build-python
-        cd QuantumFuse_Blockchain/quantumfuse_dapp
-        npm run build
+        make build-node
 
+    # Run tests for Go, Python, and Node.js
     - name: Run tests
       run: |
         make test-go
         make test-python
-        cd QuantumFuse_Blockchain/quantumfuse_dapp
-        npm test
+        make test-node
 
-    - name: Lint the code
+    # Lint Go code
+    - name: Lint Go code
       run: |
         make lint-go
 
-    - name: Generate coverage reports
+    # Generate and upload coverage reports for Go
+    - name: Generate Go coverage report
       run: |
         make coverage-go
 
+    # Upload Go coverage reports as artifacts
     - name: Upload coverage reports
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       with:
-        name: coverage-reports
-        path: |
-          coverage.out
+        name: go-coverage-report
+        path: coverage.out
 
+    # Build and run Docker container for deployment
     - name: Build Docker image
-      run: make docker_build
+      run: |
+        make docker_build
 
     - name: Run Docker container
-      run: make docker_run
+      run: |
+        make docker_run
