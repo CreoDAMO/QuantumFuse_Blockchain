@@ -11,8 +11,8 @@ CACHE_DIR ?= ~/.cache/quantumfuse
 .PHONY: all setup build run test clean update install-protoc help \
         setup-go build-go run-go test-go clean-go update-go lint-go coverage-go \
         setup-python build-python run-python test-python clean-python update-python \
-        setup-node build-node run-node clean-node update-node \
-        docker-build docker-run cache
+        setup-node build-node run-node test-node clean-node update-node \
+        docker_build docker_run cache
 
 # Default target
 all: setup build
@@ -27,10 +27,13 @@ help:
 	@echo "  build          - Build all components."
 	@echo "  run            - Run all components."
 	@echo "  test           - Run tests for all components."
+	@echo "  lint           - Lint the codebase."
+	@echo "  coverage       - Generate and publish coverage reports."
 	@echo "  clean          - Clean up all build artifacts."
 	@echo "  update         - Update all dependencies."
-	@echo "  docker-build   - Build Docker image."
-	@echo "  docker-run     - Run Docker container."
+	@echo "  install-protoc - Install protobuf compiler (protoc)."
+	@echo "  docker_build   - Build Docker image."
+	@echo "  docker_run     - Run Docker container."
 	@echo "  cache          - Set up caching for dependencies."
 	@echo "  help           - Display this help message."
 	@echo ""
@@ -41,11 +44,13 @@ help:
 setup: setup-go setup-python setup-node
 build: build-go build-python build-node
 run: run-go run-python run-node
-test: test-go test-python
+test: test-go test-python test-node
+lint: lint-go
+coverage: coverage-go
 clean: clean-go clean-python clean-node
 update: update-go update-python update-node
-docker-build: docker-build
-docker-run: docker-run
+docker_build: docker_build
+docker_run: docker_run
 cache: cache
 
 # Go targets
@@ -63,7 +68,7 @@ run-go: build-go
 
 test-go: setup-go
 	@echo "Testing Go project..."
-	@(cd $(GO_DIR) && go test -v -cover ./...)
+	@go test -v -cover -C $(GO_DIR)
 
 clean-go:
 	@echo "Cleaning Go build..."
@@ -71,14 +76,12 @@ clean-go:
 
 update-go: setup-go
 	@echo "Updating Go dependencies..."
-	@go mod tidy -C $(GO_DIR)
+	@go get -u -C $(GO_DIR)
 
 lint-go:
-	@echo "Linting Go code..."
 	@golangci-lint run $(GO_DIR)
 
 coverage-go:
-	@echo "Generating Go coverage report..."
 	@go test -coverprofile=coverage.out -C $(GO_DIR)
 	@go tool cover -html=coverage.out
 
@@ -121,7 +124,7 @@ run-node: setup-node
 	@npm start --prefix $(FRONTEND_DIR)
 
 test-node:
-	@echo "Running Node.js tests..."
+	@echo "Testing Node.js project..."
 	@npm test --prefix $(FRONTEND_DIR)
 
 clean-node:
@@ -133,18 +136,13 @@ update-node:
 	@npm update --prefix $(FRONTEND_DIR)
 
 # Docker targets
-docker-build:
-	@echo "Building Docker image..."
+docker_build:
 	docker build -t quantumfuse .
 
-docker-run:
-	@echo "Running Docker container..."
+docker_run:
 	docker run -it -p 3000:3000 quantumfuse
 
 # Cache dependencies
 cache:
-	@echo "Setting up cache for dependencies..."
 	mkdir -p $(CACHE_DIR)
-	@npm cache verify
-	@go clean -modcache
-	@pip cache purge
+	@echo "Caching dependencies..."
