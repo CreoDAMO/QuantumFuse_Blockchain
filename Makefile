@@ -9,10 +9,10 @@ CACHE_DIR ?= ~/.cache/quantumfuse
 
 # Targets
 .PHONY: all setup build run test clean update install-protoc help \
-        setup-go build-go run-go test-go clean-go update-go \
+        setup-go build-go run-go test-go clean-go update-go lint-go coverage-go \
         setup-python build-python run-python test-python clean-python update-python \
         setup-node build-node run-node clean-node update-node \
-        cache
+        docker-build docker-run cache
 
 # Default target
 all: setup build
@@ -29,7 +29,8 @@ help:
 	@echo "  test           - Run tests for all components."
 	@echo "  clean          - Clean up all build artifacts."
 	@echo "  update         - Update all dependencies."
-	@echo "  install-protoc - Install protobuf compiler (protoc)."
+	@echo "  docker-build   - Build Docker image."
+	@echo "  docker-run     - Run Docker container."
 	@echo "  cache          - Set up caching for dependencies."
 	@echo "  help           - Display this help message."
 	@echo ""
@@ -43,6 +44,8 @@ run: run-go run-python run-node
 test: test-go test-python
 clean: clean-go clean-python clean-node
 update: update-go update-python update-node
+docker-build: docker-build
+docker-run: docker-run
 cache: cache
 
 # Go targets
@@ -68,7 +71,16 @@ clean-go:
 
 update-go: setup-go
 	@echo "Updating Go dependencies..."
-	@go get -u -C $(GO_DIR)
+	@go mod tidy -C $(GO_DIR)
+
+lint-go:
+	@echo "Linting Go code..."
+	@golangci-lint run $(GO_DIR)
+
+coverage-go:
+	@echo "Generating Go coverage report..."
+	@go test -coverprofile=coverage.out -C $(GO_DIR)
+	@go tool cover -html=coverage.out
 
 # Python targets
 setup-python:
@@ -108,6 +120,10 @@ run-node: setup-node
 	@echo "Running Node.js frontend..."
 	@npm start --prefix $(FRONTEND_DIR)
 
+test-node:
+	@echo "Running Node.js tests..."
+	@npm test --prefix $(FRONTEND_DIR)
+
 clean-node:
 	@echo "Cleaning Node.js environment..."
 	@rm -rf $(FRONTEND_DIR)/node_modules
@@ -116,7 +132,19 @@ update-node:
 	@echo "Updating Node.js dependencies..."
 	@npm update --prefix $(FRONTEND_DIR)
 
+# Docker targets
+docker-build:
+	@echo "Building Docker image..."
+	docker build -t quantumfuse .
+
+docker-run:
+	@echo "Running Docker container..."
+	docker run -it -p 3000:3000 quantumfuse
+
 # Cache dependencies
 cache:
+	@echo "Setting up cache for dependencies..."
 	mkdir -p $(CACHE_DIR)
-	@echo "Caching dependencies..."
+	@npm cache verify
+	@go clean -modcache
+	@pip cache purge
