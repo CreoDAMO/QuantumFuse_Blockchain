@@ -56,11 +56,11 @@ cache: cache
 # Go targets
 setup-go:
 	@echo "Setting up Go environment..."
-	@go mod tidy -C $(GO_DIR)
+	@cd $(GO_DIR) && go mod tidy
 
 build-go: setup-go
 	@echo "Building Go project..."
-	@go build -o $(GO_DIR)/QuantumFuseNode $(GO_DIR)/main.go
+	@cd $(GO_DIR) && go build -o QuantumFuseNode main.go
 
 run-go: build-go
 	@echo "Running Go project..."
@@ -68,7 +68,7 @@ run-go: build-go
 
 test-go: setup-go
 	@echo "Testing Go project..."
-	@go test -v -cover -C $(GO_DIR)
+	@cd $(GO_DIR) && go test -v -cover ./...
 
 clean-go:
 	@echo "Cleaning Go build..."
@@ -76,14 +76,16 @@ clean-go:
 
 update-go: setup-go
 	@echo "Updating Go dependencies..."
-	@go get -u -C $(GO_DIR)
+	@cd $(GO_DIR) && go get -u
 
 lint-go:
+	@echo "Linting Go code..."
 	@golangci-lint run $(GO_DIR)
 
 coverage-go:
-	@go test -coverprofile=coverage.out -C $(GO_DIR)
-	@go tool cover -html=coverage.out
+	@echo "Generating Go coverage report..."
+	@cd $(GO_DIR) && go test -coverprofile=coverage.out
+	@go tool cover -html=$(GO_DIR)/coverage.out
 
 # Python targets
 setup-python:
@@ -91,7 +93,6 @@ setup-python:
 	@pip install -r $(PYTHON_DIR)/requirements.txt
 
 build-python: setup-python
-	@echo "Building Python project..."
 	@echo "Python project does not require explicit build."
 
 run-python: setup-python
@@ -110,7 +111,7 @@ update-python:
 	@echo "Updating Python dependencies..."
 	@pip install --upgrade -r $(PYTHON_DIR)/requirements.txt
 
-# Node.js
+# Node.js targets
 setup-node:
 	@echo "Setting up Node.js environment..."
 	@npm install --prefix $(FRONTEND_DIR)
@@ -137,12 +138,15 @@ update-node:
 
 # Docker targets
 docker_build:
+	@echo "Building Docker image..."
 	docker build -t quantumfuse .
 
 docker_run:
+	@echo "Running Docker container..."
 	docker run -it -p 3000:3000 quantumfuse
 
 # Cache dependencies
 cache:
+	@echo "Setting up cache directory..."
 	mkdir -p $(CACHE_DIR)
 	@echo "Caching dependencies..."
