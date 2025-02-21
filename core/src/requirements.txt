@@ -8,7 +8,7 @@ prometheus_client==0.20.0  # Monitoring and metrics collection
 redis==5.1.0b7       # Redis for caching, queues, and real-time tasks
 
 # Quantum Computing Libraries
-qiskit==1.2.1        # Quantum computing framework for quantum algorithms
+qiskit==1.3.0        # Quantum computing framework for quantum algorithms
 
 # Data Handling, Calculations, and Analytics
 pandas==2.2.2        # Data analysis and reporting
