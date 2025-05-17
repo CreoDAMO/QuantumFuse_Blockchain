@@ -1,6 +1,6 @@
 # Blockchain, Flask, and Utility Libraries
 Flask==3.0.3
-flask-cors==5.0.0    # CORS support for Flask API
+flask-cors==6.0.0    # CORS support for Flask API
 gunicorn==23.0.0     # Production WSGI server for Flask
 requests==2.32.1     # HTTP requests handling
 ipfshttpclient==0.8.0a2  # IPFS integration for decentralized storage
