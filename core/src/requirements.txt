@@ -2,7 +2,7 @@
 Flask==3.0.3
 flask-cors==6.0.0    # CORS support for Flask API
 gunicorn==23.0.0     # Production WSGI server for Flask
-requests==2.32.1     # HTTP requests handling
+requests==2.32.4     # HTTP requests handling
 ipfshttpclient==0.8.0a2  # IPFS integration for decentralized storage
 prometheus_client==0.20.0  # Monitoring and metrics collection
 redis==5.1.0b7       # Redis for caching, queues, and real-time tasks
